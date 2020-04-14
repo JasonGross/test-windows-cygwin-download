@@ -15,7 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Download cygwin
       run: |
-        nslookup www.cygwin.com
+        & cmd /c 'nslookup www.cygwin.com 2>&1'
         while ($true)
         {
             try
@@ -28,5 +28,5 @@ jobs:
                 Write-Host "There is an error during package downloading:`n $_"
             }
         }
-        nslookup www.cygwin.com 8.8.8.8
+        & cmd /c 'nslookup www.cygwin.com 8.8.8.8 2>&1'
       shell: powershell
