@@ -1,0 +1,32 @@
+name: CI (Windows)
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Download cygwin
+      run: |
+        nslookup www.cygwin.com
+        while ($true)
+        {
+            try
+            {
+                (New-Object Net.WebClient).DownloadFile('http://www.cygwin.com/setup-x86_64.exe', 'setup-x86_64.exe')
+                break
+            }
+            catch
+            {
+                Write-Host "There is an error during package downloading:`n $_"
+            }
+        }
+        nslookup www.cygwin.com 8.8.8.8
+      shell: powershell
